@@ -4,20 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Simple Site</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 2rem;
-      background-color: #f9f9f9;
-      color: #333;
-    }
-    button {
-      margin-right: 1rem;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Welcome to My Simple Site</h1>
@@ -27,10 +14,15 @@
     netus et malesuada fames ac turpis egestas.
   </p>
 
+  <input type="text" placeholder="Normal input" />
+  <input type="text" placeholder="Private input" data-private />
+
   <button onclick="alert('Hello there!')">Say Hello</button>
   <button onclick="document.body.style.backgroundColor = getRandomColor()">
     Change Background Color
   </button>
+  <button onclick="console.error('This is a test error')">Log Error</button>
+  <button onclick="sendRequest()">Send Network Request</button>
 
   <script>
     function getRandomColor() {
@@ -40,6 +32,22 @@
         color += letters[Math.floor(Math.random() * 16)];
       }
       return color;
+    }
+
+    function sendRequest() {
+      fetch('https://example.com/api/test', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify([{ id: 1, value: 'Test' }]),
+      })
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      })
+      .then(data => console.log('Response:', data))
+      .catch(error => console.error('Fetch error:', error));
     }
   </script>
 </body>
